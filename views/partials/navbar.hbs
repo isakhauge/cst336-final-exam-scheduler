@@ -1,11 +1,14 @@
 <nav class="navbar navbar-light bg-light">
 	<a class="navbar-brand" href="/">Scheduler</a>
-	<ul class="navbar-nav">
+	<ul class="nav">
+		<li class="nav-item mr-2">
+			<a href="/img/erd.png" target="_blank" class="btn btn-outline-secondary">ERD Diagram</a>
+		</li>
 		<li class="nav-item">
 			{{#if isLoggedIn}}
-			<a class="btn btn-secondary" href="/logout">Logout</a>
+				<a class="btn btn-secondary" href="/logout">Logout</a>
 			{{else}}
-		  	<a class="btn btn-secondary" href="/login">Login</a>
+				<a class="btn btn-secondary" href="/login">Login</a>
 			{{/if}}
 		</li>
 	</ul>
