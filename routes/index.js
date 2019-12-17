@@ -5,9 +5,9 @@ const GateKeeper = require('../res/js/class/gatekeeper/GateKeeper');
 const apiRouter = require('./api/apiRouter');
 
 router.get('/', function(req, res) {
-  res.render('index', {
-    title: 'Express'
-  });
+  if (req.session.userId != null)
+    res.redirect('/dashboard');
+  else res.redirect('/login');
 });
 
 router.get('/login', (req, res) => {

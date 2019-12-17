@@ -52,7 +52,6 @@ router.get('/bookable', (req, res) => {
 		' T.`date`,' +
 		' T.`start`,' +
 		' T.`end`,' +
-		' (SELECT `User`.`name` FROM `User`, `Time` WHERE `User`.`ID` = `Time`.`booked_by`) AS `booked_by`,' +
 		' U.`name` AS `created_by`' +
 		' FROM' +
 		' `Time` AS T,' +
@@ -60,6 +59,7 @@ router.get('/bookable', (req, res) => {
 		' WHERE' +
 		' T.`created_by` = U.`ID`' +
 		' AND T.`created_by` != ?' +
+		' AND T.`booked_by` = NULL' +
 		' AND DATE(T.`date`) >= NOW();';
 	const id = req.session.userId;
 	db.prep(sql, [id]).then((resolved) => {
@@ -75,8 +75,8 @@ router.post('/book', (req, res) => {
 	const {
 		timeId
 	} = req.body;
-	const sql = 'INSERT INTO `Booking` (`time_ID`, `user_ID`) VALUES (?,?);';
-	db.prep(sql, [timeId, req.session.userId]).then((resolved) => {
+	const sql = 'UPDATE `Time` SET `booked_by` = ? WHERE `ID` = ?;';
+	db.prep(sql, [req.session.userId, timeId]).then((resolved) => {
 		res.json(resolved);
 	}).catch((error) => {
 		res.json(error);
