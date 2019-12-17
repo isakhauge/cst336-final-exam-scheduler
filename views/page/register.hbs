@@ -1,0 +1,59 @@
+{{> navbar}}
+
+<section class="py-5 bg-primary">
+	<div class="container">
+		<h1 class="text-white text-center">
+			CST 336 - Final Exam, Scheduler
+		</h1>
+		<h2 class="text-white text-center font-weight-light h5">
+			Developed by Isak Hauge
+		</h2>
+	</div>
+</section>
+
+<section class="py-5">
+	<div class="container">
+		<div class="card shadow-lg rounded border p-3">
+			<h3 class="text-center mb-5">Register</h3>
+			<div>
+				<!-- Name -->
+				<div class="input-group mb-3">
+					<input id="name" type="text" name="name" class="form-control">
+					<div class="input-group-append">
+						<span class="input-group-text">Name</span>
+					</div>
+				</div>
+
+				<!-- Email -->
+				<div class="input-group mb-3">
+					<input id="email" type="email" class="form-control">
+					<div class="input-group-append">
+						<span class="input-group-text">Email</span>
+					</div>
+				</div>
+
+				<!-- Password -->
+				<div class="input-group mb-3">
+					<input id="password" type="password" name="password" class="form-control">
+					<div class="input-group-append">
+						<span class="input-group-text">Password</span>
+					</div>
+				</div>
+
+				<!-- Password Confirm -->
+				<div class="input-group mb-3">
+					<input id="password-confirm" type="password" class="form-control">
+					<div class="input-group-append">
+						<span class="input-group-text">Confirm password</span>
+					</div>
+				</div>
+
+				<div class="form-group text-center mt-5">
+					<button id="register" class="btn btn-primary">Register</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="module" src="/js/page/register.js"></script>
