@@ -28,16 +28,19 @@ router.get('/user', (req, res) => {
 		' T.`date`,' +
 		' T.`start`,' +
 		' T.`end`,' +
-		' (SELECT `User`.`name` FROM `User`, `Time` WHERE `User`.`ID` = `Time`.`booked_by`) AS `booked_by`,' +
-		' (SELECT `User`.`name` FROM `User` WHERE `User`.`ID` = ?) AS `created_by`' +
+		' T.`created_by`,' +
+		' U1.`name` AS `booked_by`,' +
+		' U2.`name` AS `created_by`' +
 		' FROM' +
 		' `Time` AS T,' +
-		' `User` AS U' +
+		' `User` AS U1,' +
+		' `User` AS U2' +
 		' WHERE' +
-		' T.`created_by` = U.`ID`' +
+		' U1.`ID` = T.`booked_by`' +
+		' AND U2.`ID` = T.`created_by`' +
 		' AND T.`created_by` = ?;';
 	const id = req.session.userId;
-	db.prep(sql, [id,id]).then((resolved) => {
+	db.prep(sql, [id]).then((resolved) => {
 		res.json(resolved);
 	}).catch((error) => {
 		res.json(error);
@@ -52,15 +55,19 @@ router.get('/bookable', (req, res) => {
 		' T.`date`,' +
 		' T.`start`,' +
 		' T.`end`,' +
-		' U.`name` AS `created_by`' +
+		' T.`created_by`,' +
+		' U1.`name` AS `booked_by`,' +
+		' U2.`name` AS `created_by`' +
 		' FROM' +
 		' `Time` AS T,' +
-		' `User` AS U' +
+		' `User` AS U1,' +
+		' `User` AS U2' +
 		' WHERE' +
-		' T.`created_by` = U.`ID`' +
-		' AND T.`created_by` != ?' +
-		' AND T.`booked_by` = NULL' +
-		' AND DATE(T.`date`) >= NOW();';
+		' U1.`ID` = T.`booked_by`' +
+		' AND U2.`ID` = T.`created_by`' +
+		' AND T.`booked_by` = 9' +
+		' AND DATE(T.`date`) > NOW()' +
+		' AND T.`created_by` != ?;';
 	const id = req.session.userId;
 	db.prep(sql, [id]).then((resolved) => {
 		res.json(resolved);

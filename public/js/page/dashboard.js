@@ -132,6 +132,7 @@ function makeRow(timeId, date, startTime, endTime, bookedBy) {
 function loadScheduleData(callback) {
 	const url = '/api/time/user';
 	Http.request(Http.method.get, url, null, function(raw) {
+		console.log(raw);
 		callback(raw);
 	});
 }
